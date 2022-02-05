@@ -64,7 +64,7 @@ contract DepositContract is AccessControl, ReentrancyGuard, IDepositContract {
         require(pubkey.length == 56, "DepositContract: invalid pubkey length");
 
         // Check deposit amount
-        require(deposit_amount >= 1, "DepositContract: deposit value too low");
+        require(deposit_amount >= 100 gwei, "DepositContract: deposit value too low");
         require(deposit_amount <= type(uint64).max, "DepositContract: deposit value too high");
 
         token.transferFrom(msg.sender, address(this), deposit_amount);
@@ -86,7 +86,7 @@ contract DepositContract is AccessControl, ReentrancyGuard, IDepositContract {
         uint dist_amount
     ) override external nonReentrant onlyRole(DISTRIBUTOR_ROLE) {
         // Check distribution amount
-        require(dist_amount > 1, "DepositContract: distribution value too low");
+        require(dist_amount > 100 gwei, "DepositContract: distribution value too low");
         require(dist_amount <= type(uint64).max, "DepositContract: distribution value too high");
         token.transfer(to_address, dist_amount);
     }
